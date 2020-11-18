@@ -22,7 +22,7 @@ namespace MptTask4._5
             char[] ch = str.ToCharArray();
             int[] entrys = new int[13];
 
-            Console.WriteLine("Data format: Surmane Name date of birth (17.04.2001) marks (4.1 3 3.6 4.2 5 4.5 3.8 4.9)" +
+            Console.WriteLine("Data format: Surmane Name date of birth (17.04.2001) marks (4,1 3 3,6 4,2 5 4,5 3,8 4,9)" +
                 " course (2) group (12.2)");
 
             try
@@ -33,24 +33,32 @@ namespace MptTask4._5
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Console.WriteLine("Press 1 to close");
+                int one = 0;
+                while (one == 0)
+                    one = Convert.ToInt32(Console.ReadLine());
             }
 
             for (int i = 0; i < entrys.Length; i++)
                 entrys[i] = -1;
 
-            for (int j = 0; j < entrys.Length; j++)
+            for (int j = 0, i = 0; j < entrys.Length; j++)
             {
-                for (int i = 0; i < str.Length; i++)
+                
+                for (; i < str.Length; i++)
                 {
                     if (str[i] == ' ')
                         continue;
-                    else if (entrys[j] != -1)
-                        continue;
+                    
                     else
                     {
                         entrys[j] = i;
+                        while (i < str.Length && str[i] != ' ')
+                            i++;
+                        break;
                     }
                 }
+                continue;
             }
 
             this.surname = getText(str, entrys[0]);
@@ -58,8 +66,8 @@ namespace MptTask4._5
             this.dateOfBirth = getText(str, entrys[2]);
             for (int i = 0, x = 3; i < marks.Length; i++, x++)   
                 marks[i] = Convert.ToDouble(getText(str, entrys[x]));
-            this.course = Convert.ToInt32(getText(str, entrys[12]));
-            this.group = Convert.ToDouble(getText(str, entrys[13]));
+            this.course = Convert.ToInt32(getText(str, entrys[11]));
+            this.group = Convert.ToDouble(getText(str, entrys[12]));
 
 
         }
@@ -78,7 +86,7 @@ namespace MptTask4._5
         }
 
 
-        public void getAverageMark(double[] marks)
+        public double getAverageMark()
         {
             double average = 0;
             for (int i = 0; i < marks.Length; i++)
@@ -87,6 +95,7 @@ namespace MptTask4._5
                 if (i == marks.Length - 1)
                     average = average / i;
             }
+            return average;
         }
     }
 }
